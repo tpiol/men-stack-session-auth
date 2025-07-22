@@ -22,6 +22,15 @@ router.post("/sign-up", async (req, res) => {
 
     const user = await User.create(req.body);
 
+    req.session.user = {
+        username: userInDatabase.username,
+        _id: userInDatabase
+    };
+
+    req.session.save(() => {
+        res.redirect("/");
+    });
+
     res.send(`Thanks for signing up ${user.username}`);
 });
 
@@ -59,5 +68,6 @@ router.post("/sign-in", async (req, res) => {
         });
     });
 });
+
 
     module.exports = router;
