@@ -49,14 +49,15 @@ router.post("/sign-in", async (req, res) => {
         _id: userInDatabase
     };
 
+    req.session.save(() => {
+        res.redirect("/");
+    });
 
-    res.redirect("/");
-})
-
-router.get("/sign-out", (req, res) => {
-    req.session.destroy();
-    res.redirect("/");
+    router.get("/sign-out", (req, res) => {
+        req.session.destroy(() => {
+            res.redirect("/");
+        });
+    });
 });
 
-
-module.exports = router;
+    module.exports = router;
